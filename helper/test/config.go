@@ -11,12 +11,12 @@ import (
 type TestConfigKey int
 
 const (
-	TestConfigSomeKey TestConfigKey = iota
+	TestConfigAsanaAccessToken TestConfigKey = iota
 	TestConfigAcceptanceTestKey
 )
 
 var testConfigKeyToEnvName = map[TestConfigKey]string{
-	TestConfigSomeKey:           "SOME_KEY",
+	TestConfigAsanaAccessToken:  "ASANA_ACCESS_TOKEN",
 	TestConfigAcceptanceTestKey: resource.TestEnvVar,
 }
 
