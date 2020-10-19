@@ -1,7 +1,7 @@
-Terraform Provider <REPLACE_ME>
+Terraform Provider Asana
 =========================
 
-Some general information about this provider.
+This resource is used to configure resources supported by the [Asana API](https://developers.asana.com/docs).
 
 Requirements
 ------------
@@ -13,7 +13,7 @@ Usage
 -----
 
 ```hcl
-provider "<REPLACE_ME>" {
+provider "asana" {
   version = "~> 0.1.0"
 }
 ```
@@ -32,7 +32,7 @@ To compile the provider, run `make build`. This will build the provider and put 
 ```shell script
 $ make build
 ...
-$ $GOPATH/bin/terraform-provider-<REPLACE_ME>
+$ $GOPATH/bin/terraform-provider-asana
 ...
 ```
 
@@ -41,13 +41,13 @@ $ $GOPATH/bin/terraform-provider-<REPLACE_ME>
 To use the dev provider with local Terraform, copy the freshly built plugin into Terraform's local plugins directory:
 
 ```sh
-cp $GOPATH/bin/terraform-provider-<REPLACE_ME> ~/.terraform.d/plugins/
+cp $GOPATH/bin/terraform-provider-asana ~/.terraform.d/plugins/
 ```
 
-Set the <REPLACE_ME> provider without a version constraint:
+Set the asana provider without a version constraint:
 
 ```hcl
-provider "<REPLACE_ME>" {}
+provider "asana" {}
 ```
 
 Then, initialize Terraform:

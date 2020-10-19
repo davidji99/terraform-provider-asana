@@ -1,4 +1,4 @@
-module github.com/davidji99/terraform-provider-herokux/tools
+module github.com/davidji99/terraform-provider-asana/tools
 
 go 1.15
 

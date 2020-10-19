@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/davidji99/terraform-provider-asana/asana"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
-	"github.com/hashicorp/terraform-provider-scaffolding/provider"
 )
 
 var (
@@ -15,5 +15,5 @@ var (
 )
 
 func main() {
-	plugin.Serve(&plugin.ServeOpts{ProviderFunc: provider.New(version)})
+	plugin.Serve(&plugin.ServeOpts{ProviderFunc: asana.New(version)})
 }
