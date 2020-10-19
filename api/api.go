@@ -2,6 +2,9 @@ package api
 
 import (
 	"github.com/davidji99/simpleresty"
+	"github.com/go-resty/resty/v2"
+	"net/http"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -13,8 +16,17 @@ const (
 	// DefaultUserAgent is the user agent used when making API calls.
 	DefaultUserAgent = "asana-go"
 
-	// DefaultContentTypeHeader is the default and Content-Type header.
+	// DefaultContentTypeHeader is the default  Content-Type header.
 	DefaultContentTypeHeader = "application/json"
+
+	// DefaultAcceptHeader is the default Accept header.
+	DefaultAcceptHeader = "application/json"
+
+	// DefaultMaxRetryCount is the number of times to retry the request.
+	DefaultMaxRetryCount = 3
+
+	// DefaultMaxRetryWaitTime is the number of seconds a retry can wait for.
+	DefaultMaxRetryWaitTime = 300 * time.Second
 )
 
 // A Client manages communication with the Asana API.
@@ -69,6 +81,19 @@ func New(opts ...Option) (*Client, error) {
 		accessToken:       "",
 	}
 
+	// Set Retries
+	c.http.SetRetryCount(DefaultMaxRetryCount)
+	c.http.SetRetryMaxWaitTime(DefaultMaxRetryWaitTime)
+	c.http.AddRetryCondition(
+		func(r *resty.Response, err error) bool {
+			// Set the retry wait time using the value obtained from the ['Retry-After'] header.
+			retryAfterValue, _ := strconv.Atoi(r.Header().Get("Retry-After"))
+			c.http.SetRetryWaitTime(time.Duration(retryAfterValue) * time.Second)
+
+			return r.StatusCode() == http.StatusTooManyRequests
+		},
+	)
+
 	// Define any user custom Client settings
 	if optErr := c.parseOptions(opts...); optErr != nil {
 		return nil, optErr
@@ -99,8 +124,8 @@ func (c *Client) setupClient() {
 		Per Rollbar API documentation, each individual resource will set the access_token parameter when constructing
 		the full API endpoint URL.
 	*/
-	c.http.SetHeader("Content-type", "application/json").
-		SetHeader("Accept", "application/json").
+	c.http.SetHeader("Content-type", DefaultContentTypeHeader).
+		SetHeader("Accept", DefaultAcceptHeader).
 		SetHeader("User-Agent", c.userAgent).
 		SetTimeout(1 * time.Minute).
 		SetAllowGetMethodPayload(true)

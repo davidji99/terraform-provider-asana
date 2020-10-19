@@ -51,3 +51,10 @@ func AccessToken(token string) Option {
 		return nil
 	}
 }
+
+func RetryCount(count int) Option {
+	return func(c *Client) error {
+		c.http.SetRetryCount(count)
+		return nil
+	}
+}
