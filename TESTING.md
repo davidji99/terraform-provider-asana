@@ -9,22 +9,22 @@ $ make test
 
 ## Acceptance Tests
 
-You can run the complete suite of <REPLACE_ME> acceptance tests by doing the following:
+You can run the complete suite of Asana acceptance tests by doing the following:
 
 ```bash
-$ make testacc TEST="./<REPLACE_ME>/" 2>&1 | tee test.log
+$ make testacc TEST="./asana/" 2>&1 | tee test.log
 ```
 
 To run a single acceptance test in isolation replace the last line above with:
 
 ```bash
-$ make testacc TEST="./<REPLACE_ME>/" TESTARGS='-run=NAME_OF_TEST'
+$ make testacc TEST="./asana/" TESTARGS='-run=NAME_OF_TEST'
 ```
 
-A set of tests can be selected by passing `TESTARGS` a substring. For example, to run all <REPLACE_ME> tests:
+A set of tests can be selected by passing `TESTARGS` a substring. For example, to run all asana tests:
 
 ```bash
-$ make testacc TEST="./<REPLACE_ME>/" TESTARGS='-run=NAME_OF_TEST'
+$ make testacc TEST="./asana/" TESTARGS='-run=NAME_OF_TEST'
 ```
 
 ### Test Parameters
