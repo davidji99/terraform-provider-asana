@@ -33,9 +33,12 @@ The following parameters are available for running the test. The absence of some
 will cause certain tests to be skipped.
 
 * **TF_ACC** (`integer`) **Required** - must be set to `1`.
+* **ASANA_ACCESS_TOKEN** (`string`) **Required**  - A valid Asana access token.
+* **ASANA_WORKSPACE_ID** (`string`) **Required**  - A valid Asana workspace ID.
 
 **For example:**
 ```bash
 export TF_ACC=1
+export ASANA_ACCESS_TOKEN=...
 $ make testacc TEST="./NAME_OF_TEST/" 2>&1 | tee test.log
 ```

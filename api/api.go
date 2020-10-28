@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"github.com/davidji99/simpleresty"
 	"github.com/go-resty/resty/v2"
 	"net/http"
@@ -127,6 +128,7 @@ func (c *Client) setupClient() {
 	c.http.SetHeader("Content-type", DefaultContentTypeHeader).
 		SetHeader("Accept", DefaultAcceptHeader).
 		SetHeader("User-Agent", c.userAgent).
+		SetHeader("Authorization", fmt.Sprintf("Bearer %s", c.accessToken)).
 		SetTimeout(1 * time.Minute).
 		SetAllowGetMethodPayload(true)
 
