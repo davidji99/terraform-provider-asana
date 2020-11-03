@@ -59,8 +59,8 @@ on a paid plan.
 
 * `notes` - `<string>` More detailed, free-form textual information associated with the project.
 
-* `owner` - `<string>` The current owner of the project. Set value to `"null"` to remove the owner
-.
+* `owner` - `<string>` The current owner of the project. Set value to `"null"` to remove the owner.
+
 * `is_public` - `<string>` 	True if the project is public to the organization. If false, do not share this project
 with other users in this organization without explicitly checking to see if they have access.
 Defaults to `false`.
@@ -80,6 +80,7 @@ N/A
 An existing project can be imported using the project ID.
 
 For example:
+
 ```shell script
 $ terraform import asana_project.foobar <ID>
 ```

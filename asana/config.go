@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	UserAgent = fmt.Sprintf("terraform-provider-herokux/v%s", version.ProviderVersion)
+	UserAgent = fmt.Sprintf("terraform-provider-asana/v%s", version.ProviderVersion)
 )
 
 type Config struct {
