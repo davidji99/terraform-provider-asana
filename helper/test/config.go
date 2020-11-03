@@ -12,11 +12,13 @@ type TestConfigKey int
 
 const (
 	TestConfigAsanaAccessToken TestConfigKey = iota
+	TestConfigAsanaWorkspaceID
 	TestConfigAcceptanceTestKey
 )
 
 var testConfigKeyToEnvName = map[TestConfigKey]string{
 	TestConfigAsanaAccessToken:  "ASANA_ACCESS_TOKEN",
+	TestConfigAsanaWorkspaceID:  "ASANA_WORKSPACE_ID",
 	TestConfigAcceptanceTestKey: resource.TestEnvVar,
 }
 
@@ -66,4 +68,8 @@ func (t *TestConfig) SkipUnlessAccTest(testing *testing.T) {
 	if val == "" {
 		testing.Skip(fmt.Sprintf("Acceptance tests skipped unless env '%s' set", TestConfigAcceptanceTestKey.String()))
 	}
+}
+
+func (t *TestConfig) GetWorkspaceIDorSkip(testing *testing.T) (val string) {
+	return t.GetOrSkip(testing, TestConfigAsanaWorkspaceID)
 }

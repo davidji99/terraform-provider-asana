@@ -42,3 +42,6 @@ jobs:
 
       - name: Run make test
         run: make testacc TEST="./asana/"
+        env:
+          ASANA_ACCESS_TOKEN: ${{ secrets.ASANA_ACCESS_TOKEN }}
+          ASANA_WORKSPACE_ID: ${{ secrets.ASANA_WORKSPACE_ID }}

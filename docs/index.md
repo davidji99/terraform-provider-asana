@@ -1,25 +1,77 @@
 ---
-layout: "scaffolding"
-page_title: "Provider: Scaffolding"
-sidebar_current: "docs-scaffolding-index"
+layout: "asana"
+page_title: "Provider: Asana"
+sidebar_current: "docs-asana-index"
 description: |-
-  Terraform provider scaffolding.
+  Use the Asana provider to interact with the resources in Asana.
 ---
 
-# Scaffolding Provider
+# Asana Provider
 
-Use this paragraph to give a high-level overview of your provider, and any configuration it requires.
+The Asana provider interacts with [Asana APIs](https://developers.asana.com/docs) to create various resources
+in your account.
 
-Use the navigation to the left to read about the available resources.
+## Contributing
+
+Development happens in the [GitHub repo](https://github.com/davidji99/terraform-provider-asana):
+
+* [Releases](https://github.com/davidji99/terraform-provider-asana/releases)
+* [Issues](https://github.com/davidji99/terraform-provider-asana/issues)
 
 ## Example Usage
 
 ```hcl
-provider "scaffolding" {
+# Configure the Asana provider
+provider "asana" {
+  # ...
 }
 
-# Example resource configuration
-resource "scaffolding_resource" "example" {
+# Create a new Project
+resource "asana_project" "foobar" {
   # ...
 }
 ```
+
+## Authentication
+
+The Asana provider offers a flexible means of providing credentials for authentication.
+The following methods are supported, listed in order of precedence, and explained below:
+
+- Static credentials
+- Environment variables
+
+### Static credentials
+
+Credentials can be provided statically by adding an `access_token` arguments to the Asana provider block:
+
+```hcl
+provider "asana" {
+  access_token = "SOME_ACCESS_TOKEN"
+}
+```
+
+### Environment variables
+
+When the Asana provider block does not contain an `access_token` argument, the missing credential will be sourced
+from the environment via the `ASANA_ACCESS_TOKEN` environment variables respectively:
+
+```hcl
+provider "asana" {}
+```
+
+```shell
+$ export ASANA_ACCESS_TOKEN="SOME_KEY"
+$ terraform plan
+Refreshing Terraform state in-memory prior to plan...
+```
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `access_token` - (Required) Asana personal access token. It must be provided, but it can also
+  be sourced from [other locations](#Authentication).
+
+* `url` - (Optional) Custom Base Asana API endpoint. Defaults to `https://app.asana.com/api/1.0`.
+
+* `headers` - (Optional) Additional API headers.

@@ -1,12 +1,24 @@
 package api
 
-import "time"
+import (
+	"fmt"
+	"github.com/davidji99/simpleresty"
+	"time"
+)
 
 // ProjectsService handles communication with the project related
 // methods of the Asana API.
 //
 // Asana API docs: https://developers.asana.com/docs/projects
 type ProjectsService service
+
+type ProjectResponse struct {
+	Data *Project `json:"data,omitempty"`
+}
+
+type ProjectsResponse struct {
+	Data []*Project `json:"data,omitempty"`
+}
 
 // Project represents a prioritized list of tasks in Asana or a board with columns of tasks represented as cards.
 type Project struct {
@@ -92,4 +104,122 @@ type Project struct {
 
 	// Create-only. The team that this project is shared with. This field only exists for projects in organizations.
 	Team *Team `json:"team,omitempty"`
+}
+
+// ProjectListParams represents the query parameters available when retrieving all projects.
+type ProjectListParams struct {
+	// The workspace or organization to filter projects on.
+	Workspace string `url:"workspace"`
+
+	// The team to filter projects on.
+	Team string `url:"team"`
+
+	// Only return projects whose archived field takes on the value of this parameter.
+	Archived bool `url:"archived"`
+}
+
+// ProjectRequestOpts represents the options available when creating or updating a Project.
+type ProjectRequestOpts struct {
+	Archived      bool                   `json:"archived"`
+	Color         *string                `json:"color"`
+	CurrentStatus *ProjectStatus         `json:"current_status,omitempty"`
+	CustomFields  map[string]interface{} `json:"custom_fields,omitempty"`
+	DefaultView   string                 `json:"default_view,omitempty"`
+	DueOn         *string                `json:"due_on"`
+	Followers     string                 `json:"followers,omitempty"`
+	HTMLNotes     string                 `json:"html_notes,omitempty"`
+	IsTemplate    *bool                  `json:"is_template,omitempty"`
+	Name          string                 `json:"name,omitempty"`
+	Notes         string                 `json:"notes,omitempty"`
+	Owner         *string                `json:"owner"`
+	Public        bool                   `json:"public"`
+	StartOn       *string                `json:"start_on"`
+	Team          string                 `json:"team,omitempty"`
+	Workspace     string                 `json:"workspace,omitempty"`
+}
+
+// List returns the compact project records for some filtered set of projects. Use one or more of the parameters
+// provided to filter the projects returned.
+//
+// Asana API docs: https://developers.asana.com/docs/get-multiple-projects
+func (p *ProjectsService) List(params ...interface{}) (*ProjectsResponse, *simpleresty.Response, error) {
+	result := new(ProjectsResponse)
+	urlStr, urlStrErr := p.client.http.RequestURLWithQueryParams(
+		fmt.Sprintf("/projects"), params...)
+	if urlStrErr != nil {
+		return nil, nil, urlStrErr
+	}
+
+	response, err := p.client.http.Get(urlStr, result, nil)
+
+	return result, response, err
+}
+
+// Create a new project in a workspace or team.
+//
+// Every project is required to be created in a specific workspace or organization, and this cannot be changed once set.
+// Note that you can use the workspace parameter regardless of whether or not it is an organization.
+// If the workspace for your project is an organization, you must also supply a team to share the project with.
+// Returns the full record of the newly created project.
+//
+// Asana API docs: https://developers.asana.com/docs/create-a-project
+func (p *ProjectsService) Create(createOpts *ProjectRequestOpts, ioOpts *InputOutputOpts) (*ProjectResponse, *simpleresty.Response, error) {
+	result := new(ProjectResponse)
+	urlStr := p.client.http.RequestURL("/projects")
+
+	body := struct {
+		Data    *ProjectRequestOpts `json:"data"`
+		Options *InputOutputOpts    `json:"options,omitempty"`
+	}{Data: createOpts, Options: ioOpts}
+
+	response, err := p.client.http.Post(urlStr, result, body)
+	return result, response, err
+}
+
+// Get returns the complete project record for a single project.
+//
+// Asana API docs: https://developers.asana.com/docs/get-a-project
+func (p *ProjectsService) Get(id string, params ...interface{}) (*ProjectResponse, *simpleresty.Response, error) {
+	result := new(ProjectResponse)
+	urlStr, urlStrErr := p.client.http.RequestURLWithQueryParams(
+		fmt.Sprintf("/projects/%s", id), params...)
+	if urlStrErr != nil {
+		return nil, nil, urlStrErr
+	}
+
+	response, err := p.client.http.Get(urlStr, result, nil)
+
+	return result, response, err
+}
+
+// Update a project.
+//
+// A specific, existing project can be updated by making a PUT request on the URL for that project.
+// Only the fields provided in the data block will be updated; any unspecified fields will remain unchanged.
+// When using this method, it is best to specify only those fields you wish to change, or else you may overwrite changes made by another user since you last retrieved the task.
+//
+// Returns the complete updated project record.
+//
+// Asana API docs: https://developers.asana.com/docs/update-a-project
+func (p *ProjectsService) Update(id string, updateOpts *ProjectRequestOpts, ioOpts *InputOutputOpts) (*ProjectResponse, *simpleresty.Response, error) {
+	result := new(ProjectResponse)
+	urlStr := p.client.http.RequestURL("/projects/%s", id)
+
+	body := struct {
+		Data    *ProjectRequestOpts `json:"data"`
+		Options *InputOutputOpts    `json:"options,omitempty"`
+	}{Data: updateOpts, Options: ioOpts}
+
+	response, err := p.client.http.Put(urlStr, result, body)
+	return result, response, err
+}
+
+// Delete a project.
+//
+// Asana API docs: https://developers.asana.com/docs/delete-a-project
+func (p *ProjectsService) Delete(id string) (*simpleresty.Response, error) {
+	urlStr := p.client.http.RequestURL("/projects/%s", id)
+
+	response, err := p.client.http.Delete(urlStr, nil, nil)
+	return response, err
 }

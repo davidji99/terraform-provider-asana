@@ -212,6 +212,28 @@ func (e *Enum) GetName() string {
 	return *e.Name
 }
 
+// HasFields checks if InputOutputOpts has any Fields.
+func (i *InputOutputOpts) HasFields() bool {
+	if i == nil || i.Fields == nil {
+		return false
+	}
+	if len(i.Fields) == 0 {
+		return false
+	}
+	return true
+}
+
+// HasFields checks if InputOutputParams has any Fields.
+func (i *InputOutputParams) HasFields() bool {
+	if i == nil || i.Fields == nil {
+		return false
+	}
+	if len(i.Fields) == 0 {
+		return false
+	}
+	return true
+}
+
 // GetArchived returns the Archived field if it's non-nil, zero value otherwise.
 func (p *Project) GetArchived() bool {
 	if p == nil || p.Archived == nil {
@@ -406,6 +428,73 @@ func (p *Project) GetWorkspace() *Workspace {
 		return nil
 	}
 	return p.Workspace
+}
+
+// GetColor returns the Color field if it's non-nil, zero value otherwise.
+func (p *ProjectRequestOpts) GetColor() string {
+	if p == nil || p.Color == nil {
+		return ""
+	}
+	return *p.Color
+}
+
+// GetCurrentStatus returns the CurrentStatus field.
+func (p *ProjectRequestOpts) GetCurrentStatus() *ProjectStatus {
+	if p == nil {
+		return nil
+	}
+	return p.CurrentStatus
+}
+
+// GetDueOn returns the DueOn field if it's non-nil, zero value otherwise.
+func (p *ProjectRequestOpts) GetDueOn() string {
+	if p == nil || p.DueOn == nil {
+		return ""
+	}
+	return *p.DueOn
+}
+
+// GetIsTemplate returns the IsTemplate field if it's non-nil, zero value otherwise.
+func (p *ProjectRequestOpts) GetIsTemplate() bool {
+	if p == nil || p.IsTemplate == nil {
+		return false
+	}
+	return *p.IsTemplate
+}
+
+// GetOwner returns the Owner field if it's non-nil, zero value otherwise.
+func (p *ProjectRequestOpts) GetOwner() string {
+	if p == nil || p.Owner == nil {
+		return ""
+	}
+	return *p.Owner
+}
+
+// GetStartOn returns the StartOn field if it's non-nil, zero value otherwise.
+func (p *ProjectRequestOpts) GetStartOn() string {
+	if p == nil || p.StartOn == nil {
+		return ""
+	}
+	return *p.StartOn
+}
+
+// GetData returns the Data field.
+func (p *ProjectResponse) GetData() *Project {
+	if p == nil {
+		return nil
+	}
+	return p.Data
+}
+
+// HasData checks if ProjectsResponse has any Data.
+func (p *ProjectsResponse) HasData() bool {
+	if p == nil || p.Data == nil {
+		return false
+	}
+	if len(p.Data) == 0 {
+		return false
+	}
+	return true
 }
 
 // GetAuthor returns the Author field.

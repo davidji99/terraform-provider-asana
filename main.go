@@ -6,5 +6,5 @@ import (
 )
 
 func main() {
-	plugin.Serve(&plugin.ServeOpts{ProviderFunc: asana.New})
+	plugin.Serve(&plugin.ServeOpts{ProviderFunc: asana.Provider})
 }
