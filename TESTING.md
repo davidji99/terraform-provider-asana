@@ -33,8 +33,8 @@ The following parameters are available for running the test. The absence of some
 will cause certain tests to be skipped.
 
 * **TF_ACC** (`integer`) **Required** - must be set to `1`.
-* **ASANA_ACCESS_TOKEN** (`string`) **Required**  - A valid Asana access token.
-* **ASANA_WORKSPACE_ID** (`string`) **Required**  - A valid Asana workspace ID.
+* **ASANA_ACCESS_TOKEN** (`string`) **Optional**  - A valid Asana access token.
+* **ASANA_WORKSPACE_ID** (`string`) **Optional**  - A valid Asana workspace ID.
 
 **For example:**
 ```bash

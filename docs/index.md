@@ -60,7 +60,7 @@ provider "asana" {}
 ```
 
 ```shell
-$ export ASANA_ACCESS_TOKEN="SOME_KEY"
+$ export ASANA_ACCESS_TOKEN="SOME_ACCESS_TOKEN"
 $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 ```
