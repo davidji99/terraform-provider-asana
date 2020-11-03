@@ -438,12 +438,28 @@ func (p *ProjectRequestOpts) GetColor() string {
 	return *p.Color
 }
 
+// GetCurrentStatus returns the CurrentStatus field.
+func (p *ProjectRequestOpts) GetCurrentStatus() *ProjectStatus {
+	if p == nil {
+		return nil
+	}
+	return p.CurrentStatus
+}
+
 // GetDueOn returns the DueOn field if it's non-nil, zero value otherwise.
 func (p *ProjectRequestOpts) GetDueOn() string {
 	if p == nil || p.DueOn == nil {
 		return ""
 	}
 	return *p.DueOn
+}
+
+// GetIsTemplate returns the IsTemplate field if it's non-nil, zero value otherwise.
+func (p *ProjectRequestOpts) GetIsTemplate() bool {
+	if p == nil || p.IsTemplate == nil {
+		return false
+	}
+	return *p.IsTemplate
 }
 
 // GetOwner returns the Owner field if it's non-nil, zero value otherwise.
