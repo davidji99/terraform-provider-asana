@@ -6,7 +6,6 @@ import (
 	"github.com/go-resty/resty/v2"
 	"net/http"
 	"strconv"
-	"sync"
 	"time"
 )
 
@@ -32,9 +31,6 @@ const (
 
 // A Client manages communication with the Asana API.
 type Client struct {
-	// clientMu protects the client during calls that modify the CheckRedirect func.
-	clientMu sync.Mutex
-
 	// HTTP client used to communicate with the API.
 	http *simpleresty.Client
 

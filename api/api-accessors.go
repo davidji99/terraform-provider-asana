@@ -431,7 +431,7 @@ func (p *Project) GetWorkspace() *Workspace {
 }
 
 // GetColor returns the Color field if it's non-nil, zero value otherwise.
-func (p *ProjectRequestOpts) GetColor() string {
+func (p *ProjectRequest) GetColor() string {
 	if p == nil || p.Color == nil {
 		return ""
 	}
@@ -439,7 +439,7 @@ func (p *ProjectRequestOpts) GetColor() string {
 }
 
 // GetCurrentStatus returns the CurrentStatus field.
-func (p *ProjectRequestOpts) GetCurrentStatus() *ProjectStatus {
+func (p *ProjectRequest) GetCurrentStatus() *ProjectStatus {
 	if p == nil {
 		return nil
 	}
@@ -447,7 +447,7 @@ func (p *ProjectRequestOpts) GetCurrentStatus() *ProjectStatus {
 }
 
 // GetDueOn returns the DueOn field if it's non-nil, zero value otherwise.
-func (p *ProjectRequestOpts) GetDueOn() string {
+func (p *ProjectRequest) GetDueOn() string {
 	if p == nil || p.DueOn == nil {
 		return ""
 	}
@@ -455,7 +455,7 @@ func (p *ProjectRequestOpts) GetDueOn() string {
 }
 
 // GetIsTemplate returns the IsTemplate field if it's non-nil, zero value otherwise.
-func (p *ProjectRequestOpts) GetIsTemplate() bool {
+func (p *ProjectRequest) GetIsTemplate() bool {
 	if p == nil || p.IsTemplate == nil {
 		return false
 	}
@@ -463,7 +463,7 @@ func (p *ProjectRequestOpts) GetIsTemplate() bool {
 }
 
 // GetOwner returns the Owner field if it's non-nil, zero value otherwise.
-func (p *ProjectRequestOpts) GetOwner() string {
+func (p *ProjectRequest) GetOwner() string {
 	if p == nil || p.Owner == nil {
 		return ""
 	}
@@ -471,7 +471,7 @@ func (p *ProjectRequestOpts) GetOwner() string {
 }
 
 // GetStartOn returns the StartOn field if it's non-nil, zero value otherwise.
-func (p *ProjectRequestOpts) GetStartOn() string {
+func (p *ProjectRequest) GetStartOn() string {
 	if p == nil || p.StartOn == nil {
 		return ""
 	}
