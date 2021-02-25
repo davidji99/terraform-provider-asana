@@ -118,9 +118,8 @@ type ProjectListParams struct {
 	Archived bool `url:"archived"`
 }
 
-// ProjectRequestOpts represents the options available when creating or updating a Project.
-type ProjectRequestOpts struct {
-	Archived      bool                   `json:"archived"`
+// ProjectRequest represents the options available when creating or updating a Project.
+type ProjectRequest struct {
 	Color         *string                `json:"color"`
 	CurrentStatus *ProjectStatus         `json:"current_status,omitempty"`
 	CustomFields  map[string]interface{} `json:"custom_fields,omitempty"`
@@ -128,14 +127,15 @@ type ProjectRequestOpts struct {
 	DueOn         *string                `json:"due_on"`
 	Followers     string                 `json:"followers,omitempty"`
 	HTMLNotes     string                 `json:"html_notes,omitempty"`
-	IsTemplate    *bool                  `json:"is_template,omitempty"`
 	Name          string                 `json:"name,omitempty"`
 	Notes         string                 `json:"notes,omitempty"`
 	Owner         *string                `json:"owner"`
-	Public        bool                   `json:"public"`
 	StartOn       *string                `json:"start_on"`
 	Team          string                 `json:"team,omitempty"`
 	Workspace     string                 `json:"workspace,omitempty"`
+	Archived      bool                   `json:"archived"`
+	Public        bool                   `json:"public"`
+	IsTemplate    *bool                  `json:"is_template,omitempty"`
 }
 
 // List returns the compact project records for some filtered set of projects. Use one or more of the parameters
@@ -144,8 +144,7 @@ type ProjectRequestOpts struct {
 // Asana API docs: https://developers.asana.com/docs/get-multiple-projects
 func (p *ProjectsService) List(params ...interface{}) (*ProjectsResponse, *simpleresty.Response, error) {
 	result := new(ProjectsResponse)
-	urlStr, urlStrErr := p.client.http.RequestURLWithQueryParams(
-		fmt.Sprintf("/projects"), params...)
+	urlStr, urlStrErr := p.client.http.RequestURLWithQueryParams("/projects", params...)
 	if urlStrErr != nil {
 		return nil, nil, urlStrErr
 	}
@@ -163,13 +162,13 @@ func (p *ProjectsService) List(params ...interface{}) (*ProjectsResponse, *simpl
 // Returns the full record of the newly created project.
 //
 // Asana API docs: https://developers.asana.com/docs/create-a-project
-func (p *ProjectsService) Create(createOpts *ProjectRequestOpts, ioOpts *InputOutputOpts) (*ProjectResponse, *simpleresty.Response, error) {
+func (p *ProjectsService) Create(createOpts *ProjectRequest, ioOpts *InputOutputOpts) (*ProjectResponse, *simpleresty.Response, error) {
 	result := new(ProjectResponse)
 	urlStr := p.client.http.RequestURL("/projects")
 
 	body := struct {
-		Data    *ProjectRequestOpts `json:"data"`
-		Options *InputOutputOpts    `json:"options,omitempty"`
+		Data    *ProjectRequest  `json:"data"`
+		Options *InputOutputOpts `json:"options,omitempty"`
 	}{Data: createOpts, Options: ioOpts}
 
 	response, err := p.client.http.Post(urlStr, result, body)
@@ -201,13 +200,13 @@ func (p *ProjectsService) Get(id string, params ...interface{}) (*ProjectRespons
 // Returns the complete updated project record.
 //
 // Asana API docs: https://developers.asana.com/docs/update-a-project
-func (p *ProjectsService) Update(id string, updateOpts *ProjectRequestOpts, ioOpts *InputOutputOpts) (*ProjectResponse, *simpleresty.Response, error) {
+func (p *ProjectsService) Update(id string, updateOpts *ProjectRequest, ioOpts *InputOutputOpts) (*ProjectResponse, *simpleresty.Response, error) {
 	result := new(ProjectResponse)
 	urlStr := p.client.http.RequestURL("/projects/%s", id)
 
 	body := struct {
-		Data    *ProjectRequestOpts `json:"data"`
-		Options *InputOutputOpts    `json:"options,omitempty"`
+		Data    *ProjectRequest  `json:"data"`
+		Options *InputOutputOpts `json:"options,omitempty"`
 	}{Data: updateOpts, Options: ioOpts}
 
 	response, err := p.client.http.Put(urlStr, result, body)

@@ -138,8 +138,8 @@ func resourceAsanaProjectImport(ctx context.Context, d *schema.ResourceData, met
 	return nil, nil
 }
 
-func constructProjectOpts(d *schema.ResourceData) *api.ProjectRequestOpts {
-	opts := &api.ProjectRequestOpts{}
+func constructProjectOpts(d *schema.ResourceData) *api.ProjectRequest {
+	opts := &api.ProjectRequest{}
 
 	if v, ok := d.GetOk("custom_fields"); ok {
 		vs := v.(map[string]interface{})
@@ -294,7 +294,7 @@ func resourceAsanaProjectRead(ctx context.Context, d *schema.ResourceData, meta 
 	}
 
 	// Construct a schema friendly version of custom_fields
-	cf := make(map[string]interface{}, 0)
+	cf := make(map[string]interface{})
 	for _, f := range p.GetData().CustomFields {
 		cf[f.GetGID()] = f.GetTextValue()
 	}
