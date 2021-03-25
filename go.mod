@@ -6,7 +6,7 @@ require (
 	github.com/davidji99/simpleresty v0.2.3
 	github.com/go-resty/resty/v2 v2.3.0
 	github.com/golang/protobuf v1.4.3 // indirect
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.4.4
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.5.0
 	golang.org/x/net v0.0.0-20201016165138-7b1cca2348c0 // indirect
 	golang.org/x/oauth2 v0.0.0-20200902213428-5d25da1a8d43 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
